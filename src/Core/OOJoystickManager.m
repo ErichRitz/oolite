@@ -411,7 +411,7 @@ static id sSharedStickHandler = nil;
 		case AXIS_ROLL:
 		case AXIS_PITCH:
 		case AXIS_YAW:
-			axstate[function] = (float)((abs(axisvalue) <= STICK_DEADZONE) ? 0 : axisvalue) / STICK_NORMALDIV;
+			axstate[function] = (float)((abs(axisvalue) <= deadzone) ? 0 : axisvalue) / STICK_NORMALDIV;
 			if(precisionMode)
 			{
 				axstate[function] /= STICK_PRECISIONFAC;
@@ -526,6 +526,7 @@ static id sSharedStickHandler = nil;
 				 forKey:AXIS_SETTINGS];
 	[defaults setObject:[self buttonFunctions]
 				 forKey:BUTTON_SETTINGS];
+	[defaults setInteger: deadzone forKey: DEADZONE_SETTING];
 	
 	[defaults synchronize];
 }
@@ -562,6 +563,19 @@ static id sSharedStickHandler = nil;
 	{
 		// Nothing to load - set useful defaults
 		[self setDefaultMapping];
+	}
+
+	if([defaults objectForKey:DEADZONE_SETTING])
+	{
+		deadzone = [defaults integerForKey: DEADZONE_SETTING];
+		if (deadzone < 0 || deadzone > 32767)
+		{
+			deadzone = STICK_DEADZONE;
+		}
+	}
+	else
+	{
+		deadzone = STICK_DEADZONE;
 	}
 }
 

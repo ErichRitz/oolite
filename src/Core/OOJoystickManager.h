@@ -126,6 +126,7 @@ enum {
 #define STICK_NUMBER @"stickNum"    // Stick number 0 to 4
 #define STICK_AXBUT  @"stickAxBt"   // Axis or button number
 #define STICK_FUNCTION @"stickFunc" // Function of axis/button
+#define DEADZONE_SETTING @"JoystickAxesDeadzone" // Deadzone setting 0 to 32767
 // shortcut to make code more readable when using enum as key for
 // an NSDictionary
 #define ENUMKEY(x) [NSString stringWithFormat: @"%d", x]
@@ -224,6 +225,7 @@ typedef struct
 	BOOL		butstate[BUTTON_end];
 	uint8_t		hatstate[MAX_STICKS][MAX_HATS];
 	BOOL		precisionMode;
+	int		deadzone;
 	
 	// Handle callbacks - the object, selector to call
 	// the desired function, and the hardware (axis or button etc.)
