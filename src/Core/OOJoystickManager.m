@@ -411,7 +411,18 @@ static id sSharedStickHandler = nil;
 		case AXIS_ROLL:
 		case AXIS_PITCH:
 		case AXIS_YAW:
-			axstate[function] = (float)((abs(axisvalue) <= deadzone) ? 0 : axisvalue) / STICK_NORMALDIV;
+			if (axisvalue > deadzone)
+			{
+				axstate[function] = (float)(axisvalue - deadzone) / (STICK_NORMALDIV - deadzone);
+			}
+			else if (axisvalue < -deadzone)
+			{
+				axstate[function] = (float)(axisvalue + deadzone) / (STICK_NORMALDIV - deadzone);
+			}
+			else
+			{
+				axstate[function] = 0.0f;
+			}
 			if(precisionMode)
 			{
 				axstate[function] /= STICK_PRECISIONFAC;
