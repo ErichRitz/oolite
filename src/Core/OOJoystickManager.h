@@ -105,9 +105,9 @@ enum {
 #define STICK_PRECISIONFAC (STICK_PRECISIONDIV/STICK_NORMALDIV)
 
 #if OOLITE_MAC_OS_X
-#define STICK_DEADZONE	0.0025
+#define STICK_DEADZONE	81	/* 32768 * 0.0025 = 81.92 */
 #else
-#define STICK_DEADZONE	0.05
+#define STICK_DEADZONE	1638	/* 32768 * 0.05 = 1638.4 */
 #endif
 
 // Kind of stick device (these are bits - if any more are added,

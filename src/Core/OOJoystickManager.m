@@ -360,7 +360,7 @@ static id sSharedStickHandler = nil;
 {
 	// Which axis moved? Does the value need to be made to fit a
 	// certain function? Convert axis value to a double.
-	double axisvalue = (double)evt->value;
+	int axisvalue = evt->value;
 	
 	// First check if there is a callback and...
 	if(cbObject && (cbHardware & HW_AXIS)) 
@@ -411,21 +411,18 @@ static id sSharedStickHandler = nil;
 		case AXIS_ROLL:
 		case AXIS_PITCH:
 		case AXIS_YAW:
+			axstate[function] = (float)((abs(axisvalue) <= STICK_DEADZONE) ? 0 : axisvalue) / STICK_NORMALDIV;
 			if(precisionMode)
 			{
-				axstate[function] = axisvalue / STICK_PRECISIONDIV;
-			}
-			else
-			{
-				axstate[function] = axisvalue / STICK_NORMALDIV;
+				axstate[function] /= STICK_PRECISIONFAC;
 			}
 			break;
 		case AXIS_VIEWX:
 		case AXIS_VIEWY:
-			axstate[function] = axisvalue / STICK_NORMALDIV;
+			axstate[function] = (float)axisvalue / STICK_NORMALDIV;
 		default:
 			// set the state with no modification.
-			axstate[function] = axisvalue / 32768;         
+			axstate[function] = (float)axisvalue / 32768;         
 	}
 	if ((function == AXIS_PITCH) && invertPitch) axstate[function] = -1.0*axstate[function];
 }
