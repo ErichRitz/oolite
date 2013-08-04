@@ -2991,7 +2991,7 @@ static NSTimeInterval	time_last_frame;
 			if (flightRoll < stick_roll)
 				flightRoll = stick_roll;
 		}
-		rolling = (fabs(virtualStick.x) >= deadzone);
+		rolling = (mouse_control_on && !mouse_x_axis_map_to_yaw) || (virtualStick.x != 0.0);
 	}
 	if (!rolling)
 	{
@@ -3041,7 +3041,7 @@ static NSTimeInterval	time_last_frame;
 			if (flightPitch < stick_pitch)
 				flightPitch = stick_pitch;
 		}
-		pitching = (fabs(virtualStick.y) >= deadzone);
+		pitching = mouse_control_on || (virtualStick.y != 0.0);
 	}
 	if (!pitching)
 	{
@@ -3093,7 +3093,7 @@ static NSTimeInterval	time_last_frame;
 			if (flightYaw < stick_yaw)
 				flightYaw = stick_yaw;
 		}
-		yawing = (fabs(reqYaw) >= deadzone);
+		yawing = (mouse_control_on && mouse_x_axis_map_to_yaw) || (reqYaw != 0.0);
 	}
 	if (!yawing)
 	{
