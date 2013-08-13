@@ -413,11 +413,11 @@ static id sSharedStickHandler = nil;
 		case AXIS_YAW:
 			if (axisvalue > deadzone)
 			{
-				axstate[function] = (float)(axisvalue - deadzone) / (STICK_NORMALDIV - deadzone);
+				axstate[function] = (double)(axisvalue - deadzone) / (STICK_NORMALDIV - deadzone);
 			}
 			else if (axisvalue < -deadzone)
 			{
-				axstate[function] = (float)(axisvalue + deadzone) / (STICK_NORMALDIV - deadzone);
+				axstate[function] = (double)(axisvalue + deadzone) / (STICK_NORMALDIV - deadzone);
 			}
 			else
 			{
